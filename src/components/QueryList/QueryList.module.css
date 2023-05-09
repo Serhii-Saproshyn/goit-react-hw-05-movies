@@ -1,0 +1,24 @@
+.list {
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+.movie {
+  display: block;
+}
+
+.movie img {
+  width: 250px;
+  display: inline-block;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 250px;
+}
