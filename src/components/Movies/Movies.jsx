@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import css from 'components/SearchForm/SearchForm.module.css';
-import QueryList from 'components/QueryList/QueryList';
+import css from 'components/Movies/Movies.module.css';
+import MoviesList from 'components/MoviesList/MoviesList';
 
 const API_KEY = 'db09f9e57e28be6797f7d8ba986a8c6d';
 const URL = 'https://api.themoviedb.org/3/search/movie';
 
-const SearchForm = () => {
+const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchResult, setSearchResult] = useState();
   const queryValue = searchParams.get('q') ?? '';
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState(queryValue !== '' ? queryValue : '');
 
   useEffect(() => {
     if (!search) {
@@ -57,9 +57,9 @@ const SearchForm = () => {
         </form>
       </div>
       <>
-        {searchResult && searchResult.length > 0 ? (
-          <QueryList movies={searchResult} />
-        ) : null}
+        {searchResult && searchResult.length > 0 && (
+          <MoviesList movies={searchResult} />
+        )}
       </>
       {searchResult && searchResult.length === 0 && (
         <p>Sorry we didn`t found movies for you`r request</p>
@@ -68,4 +68,4 @@ const SearchForm = () => {
   );
 };
 
-export default SearchForm;
+export default Movies;

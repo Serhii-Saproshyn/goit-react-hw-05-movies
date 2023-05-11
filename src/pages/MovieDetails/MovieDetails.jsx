@@ -1,46 +1,51 @@
-import { useParams, Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState, Suspense, useRef } from "react";
-import Loader from "components/Loader/Loader";
-import svg from "img/arrow.svg";
-import css from "pages/MovieDetails/MovieDetails.module.css";
-import noImage from "img/noimage.jpeg";
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useState, Suspense, useRef } from 'react';
+import Loader from 'components/Loader/Loader';
+import svg from 'img/arrow.svg';
+import css from 'pages/MovieDetails/MovieDetails.module.css';
+import noImage from 'img/noimage.jpeg';
 
-const API_KEY = "7962a1912dc39a09e22d58ae0351b8bc";
-const URL = "https://api.themoviedb.org/3/movie";
-const IMG_URL = "https://image.tmdb.org/t/p/w300/";
+const API_KEY = '7962a1912dc39a09e22d58ae0351b8bc';
+const URL = 'https://api.themoviedb.org/3/movie';
+const IMG_URL = 'https://image.tmdb.org/t/p/w300/';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkLocationRef = useRef(location.state?.from ?? "/");
+  const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     const getMovieDetails = async () => {
       let response = await fetch(
         `${URL}/${movieId}?api_key=${API_KEY}&language=en-US`
       );
-      response = await response.json();
-      setMovie(response);
+      if (response.status === 404) {
+        console.log('Sorry, there is no movie with this id');
+        return;
+      } else {
+        response = await response.json();
+        setMovie(response);
+      }
     };
 
     getMovieDetails();
   }, [movieId]);
 
-  const getReleaseYear = (releaseDate) => {
+  const getReleaseYear = releaseDate => {
     if (!releaseDate) {
-      return "????";
+      return '????';
     }
     let releaseYear = new Date(releaseDate);
     return releaseYear.getFullYear();
   };
 
-  const getGenres = (genres) => {
+  const getGenres = genres => {
     let arr = [];
-    genres.map((genre) => {
+    genres.map(genre => {
       return arr.push(genre.name);
     });
-    return arr.join(", ");
+    return arr.join(', ');
   };
 
   return (
@@ -88,7 +93,7 @@ const MovieDetails = () => {
           </Suspense>
         </div>
       ) : (
-        <Loader />
+        <p>Sorry, there is no movie with this id</p>
       )}
     </div>
   );

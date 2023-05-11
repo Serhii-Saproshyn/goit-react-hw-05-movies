@@ -1,10 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
-import css from 'components/QueryList/QueryList.module.css';
+import css from 'components/MoviesList/MoviesList.module.css';
 import noImage from 'img/noimage.jpeg';
 
 const IMG_URL = 'https://image.tmdb.org/t/p/w300/';
 
-const QueryList = ({ movies }) => {
+const MoviesList = ({ movies }) => {
   const location = useLocation();
 
   return (
@@ -32,4 +32,4 @@ const QueryList = ({ movies }) => {
   );
 };
 
-export default QueryList;
+export default MoviesList;
